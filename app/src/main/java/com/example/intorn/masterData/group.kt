@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.intorn.HomeFragment
+import com.example.intorn.MainActivity
 import com.example.intorn.R
 import com.example.intorn.databinding.FragmentGroupBinding
 import com.example.intorn.databinding.FragmentStaffBinding
@@ -25,10 +26,14 @@ class group : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding= FragmentGroupBinding.inflate(inflater, container, false)
+        initClickListener()
         return binding.root
 
     }
     private fun initClickListener(){
-          }
+        binding.addGroupLinearLayout.setOnClickListener {
+            MainActivity.navController.navigate(R.id.addGroup)
+        }
+    }
 
 }

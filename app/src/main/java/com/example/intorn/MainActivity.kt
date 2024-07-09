@@ -1,23 +1,21 @@
 package com.example.intorn
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.intorn.databinding.ActivityMainBinding
-import com.example.intorn.masterData.DataFragment
-import com.example.intorn.staff.StaffFragment
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navView: NavigationView
+    private lateinit var navHostFragment: NavHostFragment
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,74 +23,55 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        navController = navHostFragment.navController
         drawerLayout = binding.drawerLayout
 
 
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
 
-        val navigationView: NavigationView = binding.navView
-        navigationView.setNavigationItemSelectedListener { menuItem ->
-            onNavigationItemSelected(menuItem)
-        }
-
-        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.open_nav,
+            R.string.close_nav
+        )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, HomeFragment())
-                .commit()
-            navigationView.setCheckedItem(R.id.nav_home)
+        binding.linearLayoutSettingsActivityStaff.setOnClickListener {
+            navController.navigate(R.id.staffFragment)
+            close()
+        }
+        binding.masterDataLinear.setOnClickListener {
+            navController.navigate(R.id.dataFragment)
+            close()
+        }
+        binding.linearLayoutSettingActivityReport.setOnClickListener {
+            navController.navigate((R.id.reportFragment))
+            close()
+        }
+        binding.linearLayoutSettingActivity.setOnClickListener {
+            navController.navigate((R.id.settingsFragment))
+            close()
+        }
+        binding.linearLayoutHomeActivity.setOnClickListener {
+            navController.navigate(R.id.homeFragment)
+            close()
         }
 
     }
 
-
-    override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-
+    @SuppressLint("StaticFieldLeak")
+    companion object {
+        lateinit var navController: NavController
     }
 
-
-    private fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_home -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, HomeFragment())
-                    .commit()
-            }
-            R.id.nav_staff -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, StaffFragment())
-                    .commit()
-            }
-            R.id.nav_data -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, DataFragment())
-                    .commit()
-            }
-            R.id.nav_report -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, ReportFragment())
-                    .commit()
-            }
-            R.id.nav_settings -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, SettingsFragment())
-                    .commit()
-            }
-            R.id.nav_exit -> {
-                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
-            }
-        }
-        drawerLayout.closeDrawer(GravityCompat.START)
-        return true
-
+    private fun close() {
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
     }
 }
+

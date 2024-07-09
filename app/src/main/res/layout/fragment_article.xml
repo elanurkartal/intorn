@@ -35,7 +35,7 @@
         <SearchView
             android:id="@+id/searchView_article"
             android:layout_width="0dp"
-            android:layout_height="35dp"
+            android:layout_height="45dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/add_article_linearLayout"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,9 +43,9 @@
 
         <LinearLayout
             android:id="@+id/add_article_linearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/staff_recyclerview_background"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/edittext_border"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,9 +53,10 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@android:drawable/ic_input_add" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/add_icon"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

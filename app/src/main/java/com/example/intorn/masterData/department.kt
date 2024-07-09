@@ -5,13 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.intorn.MainActivity
 import com.example.intorn.R
+import com.example.intorn.databinding.FragmentDepartmentBinding
+import com.example.intorn.databinding.FragmentGroupBinding
 
 class department : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    private lateinit var binding: FragmentDepartmentBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -21,8 +21,13 @@ class department : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_department, container, false)
+        binding= FragmentDepartmentBinding.inflate(inflater, container, false)
+        initClickListener()
+        return binding.root
     }
-
+    private fun initClickListener(){
+        binding.addDepartmentLinearLayout.setOnClickListener {
+            MainActivity.navController.navigate(R.id.addDepartment)
+        }
+    }
 }

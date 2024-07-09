@@ -5,9 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.intorn.MainActivity
 import com.example.intorn.R
+import com.example.intorn.databinding.FragmentArticleBinding
+import com.example.intorn.databinding.FragmentGroupBinding
 
 class article : Fragment() {
+    private lateinit var binding: FragmentArticleBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -16,8 +20,14 @@ class article : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_article, container, false)
+        binding= FragmentArticleBinding.inflate(inflater, container, false)
+        initClickListener()
+        return binding.root
+    }
+    private fun initClickListener(){
+        binding.addArticleLinearLayout.setOnClickListener {
+            MainActivity.navController.navigate(R.id.addArticle)
+        }
     }
 
 }

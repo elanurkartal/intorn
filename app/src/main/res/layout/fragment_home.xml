@@ -9,11 +9,7 @@
         android:layout_width="201dp"
         android:layout_height="281dp" />
 
-    <FrameLayout
-        android:layout_width="202dp"
-        android:layout_height="283dp">
 
-    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="304dp"

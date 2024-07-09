@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.intorn.ItemAdapter
 import com.example.intorn.ItemModel
+import com.example.intorn.MainActivity
 import com.example.intorn.R
 
 class DataFragment : Fragment() {
@@ -21,7 +23,6 @@ class DataFragment : Fragment() {
 
     }
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,16 +42,17 @@ class DataFragment : Fragment() {
         // LayoutManager ve Adapter'i RecyclerView'e bağla
         itemAdapter = ItemAdapter(items)
         recyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = GridLayoutManager(requireContext(), 2,LinearLayoutManager.VERTICAL, false)
             adapter = itemAdapter
         }
         itemAdapter.setOnClickListener(object : ItemAdapter.OnClickListener {
             override fun onClick(position: Int, model: ItemModel) {
-                if(model.text=="Staff"){
+                when (model.text) {
+                    "Group" -> MainActivity.navController.navigate(R.id.group)
+                    "Department" -> MainActivity.navController.navigate(R.id.department)
+                    "Article" -> MainActivity.navController.navigate(R.id.article)
+                    "Taxes" -> MainActivity.navController.navigate(R.id.taxes)
                 }
-                /*else if(model.text=="Staff Roles"){
-                    openManagerActivity()
-                }*/
             }
 
         })
