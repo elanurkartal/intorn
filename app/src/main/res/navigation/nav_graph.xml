@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/addUserFragment"
+        android:name="com.example.intorn.staff.addUserFragment"
+        android:label="fragment_add_user"
+        tools:layout="@layout/fragment_add_user" />
+    <fragment
+        android:id="@+id/dataFragment"
+        android:name="com.example.intorn.masterData.DataFragment"
+        android:label="DataFragment" />
+    <fragment
+        android:id="@+id/addArticle"
+        android:name="com.example.intorn.masterData.article.addArticle"
+        android:label="addArticle" />
+    <fragment
+        android:id="@+id/addDepartment"
+        android:name="com.example.intorn.masterData.addDepartment"
+        android:label="addDepartment" />
+    <fragment
+        android:id="@+id/addGroup"
+        android:name="com.example.intorn.masterData.addGroup"
+        android:label="addGroup" />
+    <fragment
+        android:id="@+id/addTaxes"
+        android:name="com.example.intorn.masterData.addTaxes"
+        android:label="addTaxes" />
+    <fragment
+        android:id="@+id/article"
+        android:name="com.example.intorn.masterData.article.article"
+        android:label="article" />
+    <fragment
+        android:id="@+id/department"
+        android:name="com.example.intorn.masterData.department"
+        android:label="department" />
+    <fragment
+        android:id="@+id/staffFragment"
+        android:name="com.example.intorn.staff.StaffFragment"
+        android:label="fragment_data"
+        tools:layout="@layout/fragment_staff">
+    </fragment>
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.intorn.staff.userFragment"
+        android:label="fragment_user"
+        tools:layout="@layout/fragment_user" >
+        <action
+            android:id="@+id/action_userFragment_to_userUpdateFragment"
+            app:destination="@id/userUpdateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.intorn.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.intorn.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/group"
+        android:name="com.example.intorn.masterData.group"
+        android:label="group" />
+    <fragment
+        android:id="@+id/taxes"
+        android:name="com.example.intorn.masterData.taxes"
+        android:label="taxes" />
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.example.intorn.ReportFragment"
+        android:label="fragment_report"
+        tools:layout="@layout/fragment_report" />
+    <fragment
+        android:id="@+id/userUpdateFragment"
+        android:name="com.example.intorn.staff.UserUpdateFragment"
+        android:label="UserUpdateFragment" >
+        <argument
+            android:name="userModel"
+            app:argType="com.example.intorn.staff.UserModel" />
+    </fragment>
+</navigation>
