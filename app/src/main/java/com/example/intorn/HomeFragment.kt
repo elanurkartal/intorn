@@ -4,16 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.intorn.databinding.FragmentHomeBinding
+import com.example.intorn.databinding.ReceiptAlertDialogBinding
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var articleDataArrayList: ArrayList<HomeModel>
+    private lateinit var articleDataArrayListTemp: ArrayList<HomeModel>
     private lateinit var recyclerView: RecyclerView
     private lateinit var billRecyclerView: RecyclerView
     private lateinit var databaseHelper: DatabaseHelper
@@ -37,11 +42,13 @@ class HomeFragment : Fragment() {
         databaseHelper = DatabaseHelper(requireContext())
         recyclerView = view.findViewById(R.id.products)
         billRecyclerView = view.findViewById(R.id.recyclerView)
-
+        articleDataArrayListTemp = ArrayList()
+        articleDataArrayList = databaseHelper.getProducts() as ArrayList<HomeModel>
         setupNumberClickListeners()
         loadProductsData()
         loadSellingList()
         productOnClick()
+
 
         binding.textviewDelete.setOnClickListener {
             if (totalText.isNotEmpty()){
@@ -109,12 +116,41 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadProductsData() {
-        val items = databaseHelper.getProducts()
-        homeAdapter = HomeAdapter(items)
+        val newList = articleDataArrayList.sortedWith(compareBy { it.name})
+        val newArrayList = java.util.ArrayList<HomeModel>()
+        newArrayList.addAll(newList)
+        homeAdapter = HomeAdapter(newArrayList)
         recyclerView.apply {
             layoutManager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
             adapter = homeAdapter
         }
+        binding.layoutSearchview.setOnClickListener {
+            binding.searchArticle.onActionViewExpanded()
+        }
+        binding.searchArticle.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener,
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return false
+                }
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    articleDataArrayListTemp.clear()
+                    val searchText = p0!!.lowercase(Locale.getDefault())
+                    if (searchText.isNotEmpty()) {
+                        articleDataArrayList.forEach {
+                            if (it.name.lowercase(Locale.getDefault()).contains(searchText)) {
+                                articleDataArrayListTemp.add(it)
+                            }
+                        }
+                       homeAdapter.updateItems(articleDataArrayListTemp)
+                    } else {
+                        articleDataArrayListTemp.clear()
+                        articleDataArrayListTemp.addAll(articleDataArrayList)
+                        homeAdapter.updateItems(articleDataArrayList)
+                    }
+                    return false
+                }
+            })
     }
 
     private fun showPaymentOptions() {
@@ -142,6 +178,7 @@ class HomeFragment : Fragment() {
         // Seçilen ödeme seçeneğini işleyin (örneğin, bir şey yapabilirsiniz)
         when (option) {
             "Bar" -> {
+                showAlertDialog()
                 // 'Bar' seçeneğine tıklanınca yapılacak işlemler
                 // Örneğin, "Bar" seçeneğine tıklandığında yapılacak işlemler buraya yazılabilir.
             }
@@ -158,4 +195,16 @@ class HomeFragment : Fragment() {
         // Seçilen ödeme seçeneğini görsel olarak da güncelleyebilirsiniz
         binding.textViewTotal.text = "Selected Payment: $option"
     }
+
+    fun showAlertDialog(){
+        val customLayout =
+            layoutInflater.inflate(R.layout.receipt_alert_dialog, binding.root, false)
+        val alertBinding = ReceiptAlertDialogBinding.bind(customLayout)
+        val builder = AlertDialog.Builder(binding.root.context)
+        builder.setView(alertBinding.root)
+        builder.show()
+    }
+
+
+
 }

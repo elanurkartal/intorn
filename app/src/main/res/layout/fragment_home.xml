@@ -346,10 +346,10 @@
                 android:textColorHint="#565050"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.037"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.726" />
+                app:layout_constraintVertical_bias="0.601" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -358,15 +358,62 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
+            <LinearLayout
+                android:id="@+id/layout_searchview"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:background="@drawable/edittext_border"
+                android:padding="2dp"
+                android:layout_weight="0.4"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <SearchView
+                    android:id="@+id/searchArticle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.4"
+                    android:baselineAligned="false"
+                    android:gravity="center_vertical"
+                    android:iconifiedByDefault="false"
+                    android:background="#E9E0DA"
+                    android:queryHint="search"
+                    android:searchIcon="@null"
+                    app:searchHintIcon="@null">
+
+                </SearchView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/search_cardView"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    app:cardBackgroundColor="#E9E0DA"
+                    app:cardCornerRadius="3dp">
+
+                    <ImageView
+                        android:id="@+id/searchview_imageview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/search_icon" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/products"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_margin="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/layout_searchview" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </LinearLayout>

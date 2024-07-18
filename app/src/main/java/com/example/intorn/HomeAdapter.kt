@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.intorn.ItemAdapter.OnClickListener
 import com.example.intorn.staff.UsersAdapter.UserViewHolder
 
-class HomeAdapter(private val productItems: List<HomeModel>):
+class HomeAdapter(private var productItems: List<HomeModel>):
     RecyclerView.Adapter<HomeAdapter.HomeViewHolder>(){
 
     private var onClickListener:HomeAdapter.OnClickListener? = null
@@ -37,6 +37,10 @@ class HomeAdapter(private val productItems: List<HomeModel>):
 
     override fun getItemCount(): Int {
         return productItems.size
+    }
+    fun updateItems(arrayList: ArrayList<HomeModel>) {
+        this.productItems = arrayList
+        notifyDataSetChanged()
     }
 
     class HomeViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {

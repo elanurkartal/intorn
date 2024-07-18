@@ -7,7 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ItemAdapter  (private val items: List<ItemModel>) :
+class
+ItemAdapter  (private val items: List<ItemModel>) :
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     private var onClickListener: OnClickListener? = null
