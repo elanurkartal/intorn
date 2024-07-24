@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.util.Locale
 
 
 class BillAlertAdapter(private val billItem: List<BillAlertModel>):
@@ -29,9 +30,11 @@ class BillAlertAdapter(private val billItem: List<BillAlertModel>):
     class BillViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val name: TextView = itemView.findViewById(R.id.billName)
         private val  amount: TextView = itemView.findViewById(R.id.billAmount)
+        private val brutto: TextView = itemView.findViewById(R.id.billBrutto)
         fun bind(itemModel: BillAlertModel){
             name.text = itemModel.name
-            amount.text = itemModel.amount.toString()
+            amount.text = "grossPrice:"+itemModel.amount.toString()
+            brutto.text = "totalPrice:"+String.format(Locale.getDefault(), "%.1f", itemModel.brutto)
         }
     }
 }

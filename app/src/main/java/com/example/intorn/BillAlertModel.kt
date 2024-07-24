@@ -1,4 +1,4 @@
 package com.example.intorn
 
-data class BillAlertModel(val name: String, val amount: Double) {
+data class BillAlertModel(val name: String, val amount: Double, val brutto: Double) {
 }

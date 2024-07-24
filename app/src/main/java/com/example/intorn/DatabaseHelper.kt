@@ -57,7 +57,6 @@ class DatabaseHelper(private val context: Context) :
         """
 
 
-
         private const val CREATE_USERS_TABLE = """
             CREATE TABLE users (
                 ID INTEGER PRIMARY KEY,
@@ -299,7 +298,7 @@ class DatabaseHelper(private val context: Context) :
 
         return try {
             val rowsDeleted = db.delete(tableName, whereClause, whereArgs)
-            rowsDeleted > 0
+                rowsDeleted > 0
         } catch (e: Exception) {
             e.printStackTrace()
             false
@@ -681,6 +680,38 @@ class DatabaseHelper(private val context: Context) :
         db.close()
 
         return otv
+    }
+
+    fun getTaxesRate(productId: String): Double {
+        val db = readableDatabase
+        var rate = 0.0
+        val query = "select * from products WHERE ProductNumber = '$productId'"
+        val cursor: Cursor = db.rawQuery(query, null)
+        val vatIndex = cursor.getColumnIndex("VAT")
+
+        if (cursor.moveToFirst()) {
+            rate = getTaxesRateFromName(cursor.getString(vatIndex))
+        }
+
+        cursor.close()
+        db.close()
+
+        return rate
+    }
+    private fun getTaxesRateFromName(name: String): Double {
+        val db = readableDatabase
+        var rate = 0.0
+        var vatName = ""
+        val query = "select * from taxes WHERE Name = '$name'"
+        val cursor: Cursor = db.rawQuery(query, null)
+        val rateIndex = cursor.getColumnIndex("Value")
+
+        if (cursor.moveToFirst()) {
+            rate = cursor.getDouble(rateIndex)
+        }
+
+
+        return rate
     }
 
     // Yeni brutto fiyatını hesapla (PriceBrutto)
