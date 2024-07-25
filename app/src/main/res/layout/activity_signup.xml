@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/pink"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".SignupActivity">
+
+
+    <EditText
+        android:id="@+id/signupUsername"
+        android:layout_width="318dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:hint="Enter your username"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/signupPassword"
+        android:layout_width="312dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="Enter your password"
+        android:inputType="numberPassword"
+        app:layout_constraintEnd_toEndOf="@+id/signupUsername"
+        app:layout_constraintHorizontal_bias="0.987"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupUsername" />
+
+    <TextView
+        android:id="@+id/LoginRedirect"
+        android:layout_width="329dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="96dp"
+        android:text="Already registered? Login"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/signupPassword"
+        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintStart_toStartOf="@+id/signupPassword"
+        app:layout_constraintTop_toBottomOf="@id/signupButton" />
+
+    <FrameLayout
+        android:layout_width="224dp"
+        android:layout_height="107dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.685">
+
+        <Button
+            android:id="@+id/signupButton"
+            android:layout_width="159dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="372dp"
+            android:text="SIGN UP" />
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
