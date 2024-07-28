@@ -7,10 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.intorn.R
+import com.example.intorn.staff.UserModel
 
 
-
-class Group_adapter(private val groupItems: List<Group_model>) :
+class Group_adapter(private var groupItems: List<Group_model>) :
     RecyclerView.Adapter<Group_adapter.GroupViewHolder>() {
     private var onClickDeleteItem: ((Group_model) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
@@ -21,6 +21,10 @@ class Group_adapter(private val groupItems: List<Group_model>) :
 
     override fun getItemCount(): Int {
         return groupItems.size
+    }
+    fun updateItems(arrayList: List<Group_model>) {
+        this.groupItems = arrayList
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {

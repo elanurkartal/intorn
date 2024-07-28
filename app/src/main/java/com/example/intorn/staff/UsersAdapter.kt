@@ -6,13 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.intorn.ItemAdapter
-import com.example.intorn.ItemModel
-import com.example.intorn.MainActivity
 import com.example.intorn.R
-import com.example.intorn.masterData.Group_model
 
-class UsersAdapter(private val userItems: List<UserModel>):
+class UsersAdapter(private var userItems: List<UserModel>):
     RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
     private var onClickDeleteItem: ((UserModel) -> Unit)? = null
     private var onClickUpdateItem: OnClickListener? = null
@@ -35,6 +31,10 @@ class UsersAdapter(private val userItems: List<UserModel>):
 
     override fun getItemCount(): Int {
         return userItems.size
+    }
+    fun updateItems(arrayList: List<UserModel>) {
+        this.userItems = arrayList
+        notifyDataSetChanged()
     }
 
 

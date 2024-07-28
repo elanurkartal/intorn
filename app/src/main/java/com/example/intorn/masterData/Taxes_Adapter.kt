@@ -8,8 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.intorn.R
 import com.example.intorn.masterData.Group_adapter.GroupViewHolder
+import com.example.intorn.staff.UserModel
 
-class Taxes_Adapter(private val taxesItem: List<Taxes_Model>):
+class Taxes_Adapter(private var taxesItem: List<Taxes_Model>):
     RecyclerView.Adapter<Taxes_Adapter.TaxesViewHolder>() {
 
     private var onClickDeleteItem: ((Taxes_Model) -> Unit)? = null
@@ -25,6 +26,11 @@ class Taxes_Adapter(private val taxesItem: List<Taxes_Model>):
         holder.imageViewDelete.setOnClickListener {
             onClickDeleteItem?.invoke(item)
         }
+    }
+
+    fun updateItems(arrayList: List<Taxes_Model>) {
+        this.taxesItem = arrayList
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

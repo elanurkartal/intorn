@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import com.example.intorn.DatabaseHelper
 import com.example.intorn.MainActivity
 import com.example.intorn.R
 import com.example.intorn.databinding.FragmentDepartmentBinding
+import java.util.Locale
 
 
 class department : Fragment() {
@@ -19,6 +21,7 @@ class department : Fragment() {
     private lateinit var binding: FragmentDepartmentBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var Department_adapter: Department_adapter
+    private lateinit var departmentArrayListTmp: ArrayList<Department_model>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +41,7 @@ class department : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         databaseHelper= DatabaseHelper(requireContext())
         recyclerView = view.findViewById(R.id.department_recyclerview)
+        departmentArrayListTmp = ArrayList()
 
         loadGroupData()
 
@@ -59,6 +63,32 @@ class department : Fragment() {
             layoutManager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
             adapter = Department_adapter
         }
+        binding.searchViewDepartment.onActionViewExpanded()
+        binding.searchViewDepartment.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener,
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    departmentArrayListTmp.clear()
+                    val searchText = p0!!.lowercase(Locale.getDefault())
+                    if (searchText.isNotEmpty()) {
+                        items.forEach {
+                            if (it.department_name.lowercase(Locale.getDefault()).contains(searchText)) {
+                                departmentArrayListTmp.add(it)
+                            }
+                        }
+                        Department_adapter.updateItems(departmentArrayListTmp)
+                    } else {
+                        departmentArrayListTmp.clear()
+                        departmentArrayListTmp.addAll(items)
+                        Department_adapter.updateItems(items)
+                    }
+                    return false
+                }
+            })
     }
     private fun initClickListener(){
         binding.addDepartmentLinearLayout.setOnClickListener {

@@ -8,8 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.intorn.R
 import com.example.intorn.masterData.Group_model
+import com.example.intorn.staff.UserModel
 
-class ArticleAdapter(private val articleItems: List<ArticleModel>) :
+class ArticleAdapter(private var articleItems: List<ArticleModel>) :
     RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>(){
 
     private var onClickDeleteItem: ((ArticleModel) -> Unit)? = null
@@ -22,6 +23,12 @@ class ArticleAdapter(private val articleItems: List<ArticleModel>) :
     override fun getItemCount(): Int {
         return articleItems.size
     }
+
+    fun updateItems(arrayList: List<ArticleModel>) {
+        this.articleItems = arrayList
+        notifyDataSetChanged()
+    }
+
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val item = articleItems[position]

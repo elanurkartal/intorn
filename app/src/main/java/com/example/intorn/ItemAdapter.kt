@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.intorn.staff.UserModel
 
 class
 ItemAdapter  (private val items: List<ItemModel>) :

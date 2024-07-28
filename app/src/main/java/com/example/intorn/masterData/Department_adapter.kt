@@ -7,9 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.intorn.R
+import com.example.intorn.staff.UserModel
 
 
-class Department_adapter(private val departmentItems: List<Department_model>) :
+class Department_adapter(private var departmentItems: List<Department_model>) :
     RecyclerView.Adapter<Department_adapter.DepartmentViewHolder>() {
     private var onClickDeleteItem: ((Department_model) -> Unit)? = null
 
@@ -22,6 +23,10 @@ class Department_adapter(private val departmentItems: List<Department_model>) :
 
     override fun getItemCount(): Int {
         return departmentItems.size
+    }
+    fun updateItems(arrayList: List<Department_model>) {
+        this.departmentItems = arrayList
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: DepartmentViewHolder, position: Int) {
