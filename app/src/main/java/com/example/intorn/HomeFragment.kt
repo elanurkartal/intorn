@@ -222,87 +222,115 @@ class HomeFragment : Fragment() {
         when (option) {
             "Bar", "Card", "Other" -> {
                 showAlertDialog()
-
             }
         }
         // Seçilen ödeme seçeneğini görsel olarak da güncelleyebilirsiniz
         binding.textViewTotal.text = "Selected Payment: $option"
+        selectedPaymentOption = "Bar"
     }
 
     @SuppressLint("MissingInflatedId")
     private fun showAlertDialog() {
-        updateOrInsertSellingProcesses()
-        val customLayout =
-            layoutInflater.inflate(R.layout.receipt_alert_dialog, binding.root, false)
-        val alertBinding = ReceiptAlertDialogBinding.bind(customLayout)
-        val billRecyclerView: RecyclerView = customLayout.findViewById(R.id.billAlert)
-        newList = articleSellList.map {
-            BillAlertModel(
-                it.name,
-                it.price * it.quantity,
-                (it.price / ((databaseHelper.getTaxesRate(
-                    databaseHelper.getProductId(it.name).toString()
-                ) / 100) + 1)) * it.quantity
-            )
-        } as ArrayList<BillAlertModel>
-        val billAlertAdapter = BillAlertAdapter(newList)
-        billRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = billAlertAdapter
+        if(articleSellList.isEmpty()){
+            Toast.makeText(requireContext(),"Please Select Product", Toast.LENGTH_SHORT).show()
         }
-        val totalGrossPrice: TextView = customLayout.findViewById(R.id.totalPrice)
-        val totalPrice: TextView = customLayout.findViewById(R.id.bruttoPrice)
-        val paymentOption: TextView = customLayout.findViewById(R.id.paymentOption)
-        totalGrossPrice.text = "Total Gross Price: " + getTotalPrice()
-        totalPrice.text =
-            "Total Price: " + String.format(Locale.getDefault(), "%.1f", getTotalBruttoPrice())
-        paymentOption.text = selectedPaymentOption
-        val builder = AlertDialog.Builder(binding.root.context)
-        builder.setView(alertBinding.root)
-            .setNegativeButton("Select") { dialog, which ->
-                dialog.dismiss()
-                articleSellList.clear()
-                sellingProcessAdapter.updateItems(arrayListOf())
-            }
+        else{
 
-            .show()
+            updateOrInsertSellingProcesses()
+            val customLayout =
+                layoutInflater.inflate(R.layout.receipt_alert_dialog, binding.root, false)
+            val alertBinding = ReceiptAlertDialogBinding.bind(customLayout)
+            val billRecyclerView: RecyclerView = customLayout.findViewById(R.id.billAlert)
+            newList = articleSellList.map {
+                BillAlertModel(
+                    it.name,
+                    it.price * it.quantity,
+                    (it.price / ((databaseHelper.getTaxesRate(
+                        databaseHelper.getProductId(it.name).toString()
+                    ) / 100) + 1)) * it.quantity
+                )
+            } as ArrayList<BillAlertModel>
+            val billAlertAdapter = BillAlertAdapter(newList)
+            billRecyclerView.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = billAlertAdapter
+            }
+            val totalGrossPrice: TextView = customLayout.findViewById(R.id.totalPrice)
+            val totalPrice: TextView = customLayout.findViewById(R.id.bruttoPrice)
+            val paymentOption: TextView = customLayout.findViewById(R.id.paymentOption)
+            totalGrossPrice.text = "Total Gross Price: " + getTotalPrice()
+            totalPrice.text =
+                "Total Price: " + String.format(Locale.getDefault(), "%.1f", getTotalBruttoPrice())
+            paymentOption.text = selectedPaymentOption
+            updateProduct()
+            val builder = AlertDialog.Builder(binding.root.context)
+            builder.setView(alertBinding.root)
+                .setNegativeButton("Select") { dialog, which ->
+                    dialog.dismiss()
+                    articleSellList.clear()
+                    sellingProcessAdapter.updateItems(arrayListOf())
+                }
+
+                .show()
+        }
     }
     @SuppressLint("MissingInflatedId")
     private fun showReturnAlertDialog() {
-        updateOrInsertSellingProcesses()
-        val customLayout =
-            layoutInflater.inflate(R.layout.receipt_alert_dialog, binding.root, false)
-        val alertBinding = ReceiptAlertDialogBinding.bind(customLayout)
-        val billRecyclerView: RecyclerView = customLayout.findViewById(R.id.billAlert)
-        newList = articleSellList.map {
-            BillAlertModel(
-                it.name,
-                -(it.price * it.quantity),
-                -((it.price / ((databaseHelper.getTaxesRate(
-                    databaseHelper.getProductId(it.name).toString()
-                ) / 100) + 1)) * it.quantity)
-            )
-        } as ArrayList<BillAlertModel>
-        val billAlertAdapter = BillAlertAdapter(newList)
-        billRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = billAlertAdapter
+        if(articleSellList.isEmpty()){
+            Toast.makeText(requireContext(),"Please Select Product", Toast.LENGTH_SHORT).show()
         }
-        val totalGrossPrice: TextView = customLayout.findViewById(R.id.totalPrice)
-        val totalPrice: TextView = customLayout.findViewById(R.id.bruttoPrice)
-        val paymentOption: TextView = customLayout.findViewById(R.id.paymentOption)
-        totalGrossPrice.text = "Total Gross Price: " + getTotalPrice()
-        totalPrice.text = "Total Price: " + String.format(Locale.getDefault(), "%.1f", getTotalBruttoPrice())
-        paymentOption.text = selectedPaymentOption
-        val builder = AlertDialog.Builder(binding.root.context)
-        builder.setView(alertBinding.root)
-            .setNegativeButton("Select") { dialog, which ->
-                dialog.dismiss()
-                articleSellList.clear()
-                sellingProcessAdapter.updateItems(arrayListOf())
-            }
+        else{
 
-            .show()
+            updateOrInsertSellingProcesses()
+            val customLayout =
+                layoutInflater.inflate(R.layout.receipt_alert_dialog, binding.root, false)
+            val alertBinding = ReceiptAlertDialogBinding.bind(customLayout)
+            val billRecyclerView: RecyclerView = customLayout.findViewById(R.id.billAlert)
+            newList = articleSellList.map {
+                BillAlertModel(
+                    it.name,
+                    -(it.price * it.quantity),
+                    -((it.price / ((databaseHelper.getTaxesRate(
+                        databaseHelper.getProductId(it.name).toString()
+                    ) / 100) + 1)) * it.quantity)
+                )
+            } as ArrayList<BillAlertModel>
+            val billAlertAdapter = BillAlertAdapter(newList)
+            billRecyclerView.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = billAlertAdapter
+            }
+            val totalGrossPrice: TextView = customLayout.findViewById(R.id.totalPrice)
+            val totalPrice: TextView = customLayout.findViewById(R.id.bruttoPrice)
+            val paymentOption: TextView = customLayout.findViewById(R.id.paymentOption)
+            totalGrossPrice.text = "Total Gross Price: " + getTotalPrice()
+            totalPrice.text = "Total Price: " + String.format(Locale.getDefault(), "%.1f", getTotalBruttoPrice())
+            paymentOption.text = selectedPaymentOption
+            updateProductList()
+            updateProduct()
+            val builder = AlertDialog.Builder(binding.root.context)
+            builder.setView(alertBinding.root)
+                .setNegativeButton("Select") { dialog, which ->
+                    dialog.dismiss()
+                    articleSellList.clear()
+                    sellingProcessAdapter.updateItems(arrayListOf())
+                }
+
+                .show()
+        }
+    }
+
+    private fun updateProductList(){
+        for (product in articleSellList){
+            articleDataArrayList.find { it.name == product.name}?. let { it.stock += product.quantity }
+        }
+        homeAdapter.notifyDataSetChanged()
+    }
+
+    private fun updateProduct(){
+        for (product in articleDataArrayList){
+            databaseHelper.updateProductStock(databaseHelper.getProductId(product.name).toString(),product.stock)
+        }
     }
 
     private fun updateOrInsertSellingProcesses() {

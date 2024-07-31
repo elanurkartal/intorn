@@ -40,26 +40,6 @@ class addUserFragment : Fragment() {
         // binding = FragmentAddUserBinding.inflate(layoutInflater)
         databaseHelper = DatabaseHelper(requireContext())
 
-        /*val spinner = binding.spinner
-        val items = listOf("User","Manager")
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item,items)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>,
-                                        view: View, position: Int, id: Long) {
-                Toast.makeText(activity, items[position], Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // write code to perform some action
-            }
-        }
-
-         */
-
         val spinner = binding.spinner
         val items = listOf("User", "Manager")
         val adapter =
@@ -69,12 +49,17 @@ class addUserFragment : Fragment() {
 
 
         binding.saveButton.setOnClickListener {
-            insertUser(
-                binding.editTextName.text.toString(),
-                binding.editTextPassword.text.toString(),
-                binding.editTextPasswordAgain.text.toString(),
-                binding.spinner.selectedItem.toString()
-            )
+            if (!databaseHelper.findUser(binding.editTextName.text.toString())){
+                insertUser(
+                    binding.editTextName.text.toString(),
+                    binding.editTextPassword.text.toString(),
+                    binding.editTextPasswordAgain.text.toString(),
+                    binding.spinner.selectedItem.toString()
+                )
+            }
+            else{
+                Toast.makeText(requireContext(), "UserName Already Exist", Toast.LENGTH_SHORT).show()
+            }
         }
         binding.addUserCancel.setOnClickListener {
             MainActivity.navController.navigate(R.id.userFragment)

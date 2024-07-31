@@ -39,13 +39,13 @@ class addGroup : Fragment() {
 
         binding.saveButton.setOnClickListener {
             val groupName=binding.editTextGroupName
-            if(groupName.text.toString().isNotEmpty()){
+            if(groupName.text.toString().isNotEmpty() && !databaseHelper.findGroup(groupName.text.toString())){
                 databaseHelper.insertGroup(groupName.text.toString())
                 Toast.makeText(requireContext(), "Group added", Toast.LENGTH_SHORT).show()
                 MainActivity.navController.navigate(R.id.group)
             }
             else{
-                Toast.makeText(requireContext(), "Empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Empty or Attribute Already Used", Toast.LENGTH_SHORT).show()
             }
         }
         binding.cancelButton.setOnClickListener {

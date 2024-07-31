@@ -46,13 +46,13 @@ class addDepartment : Fragment() {
 
         binding.saveButton.setOnClickListener {
             val departmentName=binding.departmentName
-            if(departmentName.text.toString().isNotEmpty()){
+            if(departmentName.text.toString().isNotEmpty() && !databaseHelper.findDepartment(departmentName.text.toString())){
                 databaseHelper.insertDepartment(departmentName.text.toString())
                 Toast.makeText(requireContext(), "Department added", Toast.LENGTH_SHORT).show()
                 MainActivity.navController.navigate(R.id.department)
             }
             else{
-                Toast.makeText(requireContext(), "Empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Empty or Attribute Already Used", Toast.LENGTH_SHORT).show()
             }
         }
         binding.cancelButton.setOnClickListener {

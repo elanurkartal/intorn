@@ -57,14 +57,14 @@ class addArticle : Fragment() {
             val price = binding.articlePrice.text.toString()
             val stock = binding.editTextArticleStock.text.toString()
             if(departmentId.isNotEmpty()&&productNumber.isNotEmpty()&&name.isNotEmpty()&&
-                vat.isNotEmpty()&&price.isNotEmpty()&&stock.isNotEmpty()){
+                vat.isNotEmpty()&&price.isNotEmpty()&&stock.isNotEmpty()&&!databaseHelper.findProduct(name,productNumber)){
 
                 databaseHelper.insertArticle(databaseHelper.getDepartmentId(departmentId),productNumber,name,vat,price.toDouble(),stock.toInt())
                 Toast.makeText(requireContext(), "Article added", Toast.LENGTH_SHORT).show()
                 MainActivity.navController.navigate(R.id.article)
             }
             else{
-                Toast.makeText(requireContext(), "Empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Empty or Attribute Already Used", Toast.LENGTH_SHORT).show()
             }
 
         }

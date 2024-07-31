@@ -1,5 +1,6 @@
 package com.example.intorn
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -39,7 +40,7 @@ class DatabaseHelper(private val context: Context) :
             CREATE TABLE products (
                 ID INTEGER PRIMARY KEY,
                 DepartmentID INTEGER,
-                ProductNumber TEXT NOT NULL UNIQUE,
+                ProductNumber TEXT NOT NULL,
                 Name TEXT NOT NULL,
                 VAT TEXT NOT NULL,
                 PriceBrutto DOUBLE NOT NULL,
@@ -164,6 +165,56 @@ class DatabaseHelper(private val context: Context) :
         val usersExist = cursor.count > 0
         cursor.close()
         return usersExist
+    }
+    fun findUser(username: String): Boolean {
+        val db = readableDatabase
+        val selection = "Name = ?"
+        val selectionArgs = arrayOf(username)
+        val cursor = db.query("users", null, selection, selectionArgs, null, null, null)
+
+        val exist = cursor.count > 0
+        cursor.close()
+        return exist
+    }
+    fun findDepartment(departmentName: String): Boolean {
+        val db = readableDatabase
+        val selection = "Name = ?"
+        val selectionArgs = arrayOf(departmentName)
+        val cursor = db.query("department", null, selection, selectionArgs, null, null, null)
+
+        val exist = cursor.count > 0
+        cursor.close()
+        return exist
+    }
+    fun findGroup(groupName: String): Boolean {
+        val db = readableDatabase
+        val selection = "Name = ?"
+        val selectionArgs = arrayOf(groupName)
+        val cursor = db.query("groupp", null, selection, selectionArgs, null, null, null)
+
+        val exist = cursor.count > 0
+        cursor.close()
+        return exist
+    }
+    fun findTaxes(taxesName: String): Boolean {
+        val db = readableDatabase
+        val selection = "Name = ?"
+        val selectionArgs = arrayOf(taxesName)
+        val cursor = db.query("taxes", null, selection, selectionArgs, null, null, null)
+
+        val exist = cursor.count > 0
+        cursor.close()
+        return exist
+    }
+    fun findProduct(productName: String, productNumber: String): Boolean {
+        val db = readableDatabase
+        val selection = "Name = ? OR ProductNumber = ?"
+        val selectionArgs = arrayOf(productName,productNumber)
+        val cursor = db.query("products", null, selection, selectionArgs, null, null, null)
+
+        val exist = cursor.count > 0
+        cursor.close()
+        return exist
     }
     fun readSellingProcess(productId: String): Boolean {
         val db = readableDatabase
@@ -290,6 +341,7 @@ class DatabaseHelper(private val context: Context) :
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     fun deleteDepartment(departmentName: String): Boolean {
         val db = writableDatabase
         val tableName = "department"
@@ -432,6 +484,26 @@ class DatabaseHelper(private val context: Context) :
             }
         }
         return list
+    }
+    fun getUserRole(userName:String):String{
+        val db = readableDatabase
+        var userRole = ""
+        val query = "select * from users WHERE Name = '$userName'"
+        val cursor: Cursor = db.rawQuery(query, null)
+        val nameIndex = cursor.getColumnIndex("Type")
+
+        if (nameIndex== -1) {
+            cursor.close()
+            throw IllegalArgumentException("Veritabanında 'type' sütunu bulunamadı.")
+        }
+        if (cursor.moveToFirst()) {
+            userRole = cursor.getString(nameIndex)
+        }
+
+        cursor.close()
+        db.close()
+
+        return userRole
     }
     fun insertTaxes(taxesName: String, taxesRate: Double): Long {
         val values = ContentValues().apply {

@@ -36,13 +36,13 @@ class addTaxes : Fragment() {
         binding.saveButton.setOnClickListener{
             val taxesName=binding.spinner
             val taxesRate = binding.editTextName
-            if(taxesName.text.toString().isNotEmpty() && taxesRate.text.toString().isNotEmpty()){
+            if(taxesName.text.toString().isNotEmpty() && taxesRate.text.toString().isNotEmpty() && !databaseHelper.findTaxes(taxesName.text.toString())){
                 databaseHelper.insertTaxes(taxesName.text.toString(), taxesRate.text.toString().toDouble())
                 Toast.makeText(requireContext(), "Taxes added", Toast.LENGTH_SHORT).show()
                 MainActivity.navController.navigate(R.id.taxes)
             }
             else{
-                Toast.makeText(requireContext(), "Empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Empty or Attribute Already Used", Toast.LENGTH_SHORT).show()
             }
         }
         binding.cancelButton.setOnClickListener {
