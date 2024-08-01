@@ -24,7 +24,11 @@
     <fragment
         android:id="@+id/addGroup"
         android:name="com.example.intorn.masterData.addGroup"
-        android:label="addGroup" />
+        android:label="addGroup" >
+        <argument
+            android:name="groupModel"
+            app:argType="com.example.intorn.masterData.Group_model" />
+    </fragment>
     <fragment
         android:id="@+id/addTaxes"
         android:name="com.example.intorn.masterData.addTaxes"
@@ -65,7 +69,11 @@
     <fragment
         android:id="@+id/group"
         android:name="com.example.intorn.masterData.group"
-        android:label="group" />
+        android:label="group" >
+        <action
+            android:id="@+id/action_group_to_addGroup"
+            app:destination="@id/addGroup" />
+    </fragment>
     <fragment
         android:id="@+id/taxes"
         android:name="com.example.intorn.masterData.taxes"

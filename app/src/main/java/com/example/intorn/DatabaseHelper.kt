@@ -151,7 +151,17 @@ class DatabaseHelper(private val context: Context) :
             put("Name", newName)
             put("Password", password)
         }
-        Log.v("oldName",oldName)
+        db.update(tableName,values,whereClause,whereArgs)
+        db.close()
+    }
+    fun updateGroup(newName: String, oldName: String){
+        val db = writableDatabase
+        val tableName = "groupp"
+        val whereClause = "Name = ?"
+        val whereArgs = arrayOf(oldName)
+        val values = ContentValues().apply {
+            put("Name", newName)
+        }
         db.update(tableName,values,whereClause,whereArgs)
         db.close()
     }

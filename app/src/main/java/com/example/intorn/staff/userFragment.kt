@@ -59,7 +59,6 @@ class userFragment : Fragment() {
             override fun onClick(position: Int, model: UserModel) {
                 val action = userFragmentDirections.actionUserFragmentToUserUpdateFragment(model)
                 findNavController().navigate(action)
-                //MainActivity.navController.navigate(R.id.userUpdateFragment)
             }
         })
     }

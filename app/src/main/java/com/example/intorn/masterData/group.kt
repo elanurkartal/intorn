@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,10 @@ import com.example.intorn.DatabaseHelper
 import com.example.intorn.MainActivity
 import com.example.intorn.R
 import com.example.intorn.databinding.FragmentGroupBinding
+import com.example.intorn.masterData.groupDirections.Companion.actionGroupToAddGroup
+import com.example.intorn.staff.UserModel
+import com.example.intorn.staff.UsersAdapter
+import com.example.intorn.staff.userFragmentDirections
 import java.util.Locale
 
 
@@ -56,6 +61,14 @@ class group : Fragment() {
             // Veriyi güncelledikten sonra RecyclerView'yi yeniden yükle
             loadGroupData()
         }
+
+        group_adapter.setOnClickUpdateItem(object : Group_adapter.OnClickListener{
+            override fun onClick(position: Int, model: Group_model) {
+                val action = groupDirections.actionGroupToAddGroup(model)
+                findNavController().navigate(action)
+                //MainActivity.navController.navigate(R.id.userUpdateFragment)
+            }
+        })
 
         // Click listener için fonksiyonu çağır
         initClickListener()
