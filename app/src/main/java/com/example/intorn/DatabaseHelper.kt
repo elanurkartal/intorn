@@ -284,7 +284,7 @@ class DatabaseHelper(private val context: Context) :
         /*
         if (cursor.moveToFirst()) {
             do {
-                val user = UserModel(
+                val user = UserModel(c
                     cursor.getString(nameIndex),
                     cursor.getString(typeIndex)
                 )
