@@ -27,6 +27,14 @@ class DatabaseHelper(private val context: Context) :
             )
         """
 
+        private const val CREATE_REPORT_TABLE = """
+            CREATE TABLE report (
+                ID INTEGER PRIMARY KEY,
+                Type TEXT NOT NULL,
+                Count INTEGER NOT NULL
+            )
+        """
+
         private const val CREATE_DEPARTMENT_TABLE = """
             CREATE TABLE department (
                 ID INTEGER PRIMARY KEY,
@@ -114,8 +122,8 @@ class DatabaseHelper(private val context: Context) :
         db?.execSQL(CREATE_SELLING_PROCESS_TABLE)
         db?.execSQL(CREATE_SELLING_PROCESS_TYPE_TABLE)
         db?.execSQL(CREATE_TENDER_TABLE)
+        db?.execSQL(CREATE_REPORT_TABLE)
         db?.execSQL("INSERT INTO users (Type,Name,Password) VALUES('Manager','admin','123')")
-
 
     }
 
@@ -129,6 +137,7 @@ class DatabaseHelper(private val context: Context) :
         db?.execSQL("DROP TABLE IF EXISTS selling_process")
         db?.execSQL("DROP TABLE IF EXISTS selling_process_type")
         db?.execSQL("DROP TABLE IF EXISTS Tender")
+        db?.execSQL("DROP TABLE IF EXISTS report")
         onCreate(db)
     }
 
@@ -141,6 +150,14 @@ class DatabaseHelper(private val context: Context) :
         val db = writableDatabase
         return db.insert("users", null, values)
     }
+    fun insertReport(type: String): Long {
+        val values = ContentValues().apply {
+            put("Type", type)
+            put("Count", 1)
+        }
+        val db = writableDatabase
+        return db.insert("report", null, values)
+    }
     fun updateUser(newName: String, password: String, type: String, oldName: String){
         val db = writableDatabase
         val tableName = "users"
@@ -150,6 +167,17 @@ class DatabaseHelper(private val context: Context) :
             put("Type", type)
             put("Name", newName)
             put("Password", password)
+        }
+        db.update(tableName,values,whereClause,whereArgs)
+        db.close()
+    }
+    fun updateReport(type: String){
+        val db = writableDatabase
+        val tableName = "report"
+        val whereClause = "Type = ?"
+        val whereArgs = arrayOf(type)
+        val values = ContentValues().apply {
+            put("Count", getReportCount(type)+1)
         }
         db.update(tableName,values,whereClause,whereArgs)
         db.close()
@@ -193,6 +221,16 @@ class DatabaseHelper(private val context: Context) :
         val selection = "Name = ?"
         val selectionArgs = arrayOf(username)
         val cursor = db.query("users", null, selection, selectionArgs, null, null, null)
+
+        val exist = cursor.count > 0
+        cursor.close()
+        return exist
+    }
+    fun findReport(type: String): Boolean {
+        val db = readableDatabase
+        val selection = "Type = ?"
+        val selectionArgs = arrayOf(type)
+        val cursor = db.query("report", null, selection, selectionArgs, null, null, null)
 
         val exist = cursor.count > 0
         cursor.close()
@@ -596,6 +634,22 @@ class DatabaseHelper(private val context: Context) :
         db.close()
 
         return departmentId
+    }
+    fun getReportCount(type:String):Int{
+        val db = readableDatabase
+        var reportCount = -1
+        val query = "select * from report WHERE Type = '$type'"
+        val cursor: Cursor = db.rawQuery(query, null)
+        val nameIndex = cursor.getColumnIndex("Count")
+
+        if (nameIndex== -1) {
+            cursor.close()
+            throw IllegalArgumentException("Veritabanında 'type' sütunu bulunamadı.")
+        }
+        if (cursor.moveToFirst()) {
+            reportCount = cursor.getInt(nameIndex)
+        }
+        return reportCount
     }
     fun getGroupIdFromGroupName(groupName: String):Int{
         val db = readableDatabase

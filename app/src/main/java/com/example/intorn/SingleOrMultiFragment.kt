@@ -24,6 +24,8 @@ import java.util.Locale
 class SingleOrMultiFragment : Fragment() {
     private lateinit var binding: FragmentSingleOrMultiBinding
     private lateinit var reportAdapter: ReportAdapter
+
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var sharedPreferences: SharedPreferences
@@ -54,19 +56,20 @@ class SingleOrMultiFragment : Fragment() {
 
         binding.single.setOnClickListener {
             if (singleOrMulti == "X Report"){
-                showAlertDialog()
+                insertReport("X")
+                showAlertDialog("X")
             }
 
         }
     }
-    private fun showAlertDialog() {
+    private fun showAlertDialog(type: String) {
         val customLayout =
             layoutInflater.inflate(R.layout.x_report_dialog, binding.root, false)
         addTotalRv(customLayout)
         val userType: TextView = customLayout.findViewById(R.id.textView8)
-        val userId: TextView = customLayout.findViewById(R.id.textView11)
+        val reportId: TextView = customLayout.findViewById(R.id.textView11)
         userType.text = "User Type:"+databaseHelper.getUserRole(loginUser)
-        //userId.text =
+        reportId.text = "ReportID:"+databaseHelper.getReportCount(type).toString()
         val alertBinding = XReportDialogBinding.bind(customLayout)
         val builder = AlertDialog.Builder(binding.root.context)
         builder.setView(alertBinding.root)
@@ -82,6 +85,15 @@ class SingleOrMultiFragment : Fragment() {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = reportAdapter
+        }
+    }
+
+    private fun insertReport(type: String){
+        if (databaseHelper.findReport(type)){
+            databaseHelper.updateReport(type)
+        }
+        else{
+            databaseHelper.insertReport(type)
         }
     }
 }

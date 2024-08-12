@@ -30,12 +30,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/departmentRv"
-        android:layout_width="402dp"
-        android:layout_height="118dp"
+        android:layout_width="388dp"
+        android:layout_height="101dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="408dp" />
+        tools:layout_editor_absoluteY="425dp" />
 
     <TextView
         android:id="@+id/textView10"
@@ -73,10 +73,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/groupRv"
-        android:layout_width="409dp"
-        android:layout_height="117dp"
+        android:layout_width="406dp"
+        android:layout_height="76dp"
         android:layout_marginTop="40dp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView3"
         app:layout_constraintTop_toBottomOf="@+id/totalRv"
-        tools:layout_editor_absoluteX="1dp" />
+        tools:layout_editor_absoluteX="4dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
