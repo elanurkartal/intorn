@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/item_article_home_background"
+    android:orientation="vertical"
+    android:padding="77dp"
+    android:paddingStart="222dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/xReport2"
+            android:layout_width="328dp"
+            android:layout_height="111dp"
+            android:layout_marginStart="11dp"
+            android:gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+            <TextView
+
+                android:id="@+id/titleTextView"
+                android:layout_width="328dp"
+                android:layout_height="46dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="111dp"
+                android:layout_marginEnd="111dp"
+                android:gravity="center"
+                android:layout_marginRight="777dp"
+                android:layout_marginBottom="111dp"
+                android:paddingStart="-70dp"
+                android:text="REPORTS"
+                android:textColor="@color/darkRose"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_marginStart="-77dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/xReport"
+                android:layout_width="222dp"
+                android:layout_height="111dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="-111dp"
+                android:background="@drawable/staff_recyclerview_background"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="145dp"
+                    android:layout_height="53dp"
+                    android:gravity="center|center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textview_master_name_1"
+                        android:layout_width="135dp"
+                        android:layout_height="38dp"
+                        android:text=" X REPORT"
+                        android:textColor="#FFFFFF"
+                        android:textSize="27sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/zReport"
+                android:layout_width="222dp"
+                android:layout_height="111dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="-111dp"
+                android:background="@drawable/staff_recyclerview_background"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textview_master_name_2"
+                    android:layout_width="135dp"
+                    android:layout_height="38dp"
+                    android:text=" Z REPORT"
+                    android:textColor="#FFFFFF"
+                    android:textSize="27sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
+
